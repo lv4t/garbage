@@ -1,0 +1,5 @@
+{
+  "name": "Trợ lý Phân loại Rác AI",
+  "description": "Một ứng dụng web giúp người dùng phân loại rác thải sinh hoạt một cách chính xác bằng cách sử dụng Gemini để nhận diện hình ảnh, dựa trên 5 danh mục rác.",
+  "requestFramePermissions": []
+}
