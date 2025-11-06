@@ -34,7 +34,7 @@ export async function classifyWaste(imageFile: File): Promise<WasteCategory> {
 
   const imagePart = await fileToGenerativePart(imageFile);
   
-  const prompt = `Phân tích hình ảnh và phân loại đối tượng chính vào MỘT trong năm loại sau ĐÂY: "Giấy Tái Chế", "Nhựa Tái Chế", "Kim Loại Tái Chế", "Rác Hữu Cơ", hoặc "Rác Khác". Phản hồi của bạn CHỈ ĐƯỢC LÀ MỘT trong năm chuỗi ký tự này và không có gì khác.`;
+  const prompt = `Phân tích hình ảnh và phân loại đối tượng chính vào MỘT trong năm loại sau ĐÂY: "Giấy Tái Chế", "Nhựa Tái Chế", "Kim Loại Tái Chế", "Rác Hữu Cơ", hoặc "Rác Khác". Lưu ý quan trọng: túi ni-lông, bao bì nhựa mỏng, hoặc hộp xốp phải được phân loại là "Rác Khác". Phản hồi của bạn CHỈ ĐƯỢC LÀ MỘT trong năm chuỗi ký tự này và không có gì khác.`;
 
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash',

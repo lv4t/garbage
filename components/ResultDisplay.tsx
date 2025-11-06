@@ -15,13 +15,13 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ category }) => {
   }
 
   return (
-    <div className="w-full max-w-2xl text-center space-y-6">
+    <div className="w-full max-w-2xl text-center space-y-4 md:space-y-6 animate-slide-in">
       <div className={`p-4 md:p-6 border-2 rounded-lg transition-all duration-300 ${details.colorClasses}`}>
-        <h2 className="text-2xl md:text-4xl font-bold">{details.displayName}</h2>
+        <h2 className="text-2xl md:text-3xl font-bold">{details.displayName}</h2>
       </div>
-      <div className="text-left bg-white p-6 rounded-lg shadow-md border border-gray-200 space-y-3">
-        <p className="text-lg text-gray-800 font-semibold">{details.description}</p>
-        <p className="text-base text-gray-600">{details.instructions}</p>
+      <div className="text-left bg-white p-4 md:p-6 rounded-lg shadow-md border border-gray-200 space-y-3">
+        <p className="text-base md:text-lg text-gray-800 font-semibold">{details.description}</p>
+        <p className="text-sm md:text-base text-gray-600">{details.instructions}</p>
       </div>
     </div>
   );

@@ -13,13 +13,117 @@
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "@google/genai": "https://aistudiocdn.com/@google/genai@^1.28.0",
     "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0"
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "@tensorflow/tfjs": "https://aistudiocdn.com/@tensorflow/tfjs@4.20.0",
+    "@tensorflow-models/coco-ssd": "https://aistudiocdn.com/@tensorflow-models/coco-ssd@2.2.3"
   }
 }
 </script>
+<style>
+  body {
+    background-color: #F8F7F2; /* Fallback color */
+    background-image: linear-gradient(to bottom, #E6F4EA 0%, #F8F7F2 100%);
+    background-attachment: fixed; /* Keep gradient fixed during scroll */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  @keyframes slide-in-bottom {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  .animate-slide-in {
+    animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  }
+  
+  /* Environmental Background Styles */
+  .environmental-background {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: -1;
+    pointer-events: none;
+    line-height: 0;
+  }
+
+  .environmental-background svg {
+      width: 100%;
+      height: auto;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .turbine-blades {
+    animation: spin 25s linear infinite;
+    transform-origin: center;
+  }
+
+</style>
 </head>
-  <body class="bg-gray-50">
+  <body>
     <div id="root"></div>
+    
+    <div class="environmental-background">
+      <svg width="1920" height="280" viewBox="0 0 1920 280" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
+        <path d="M960 280H0V210C0 210 249.206 137.892 453.5 163.5C657.794 189.108 816 117 960 117C1104 117 1262.21 189.108 1466.5 163.5C1670.79 137.892 1920 210 1920 210V280H960Z" fill="#AED581"/>
+        <path d="M1920 280H960V168C960 168 1150.21 213.108 1354.5 187.5C1558.79 161.892 1726 89.9999 1920 89.9999V280Z" fill="#9CCC65"/>
+        <path d="M960 280H0V168C0 168 189.206 213.108 393.5 187.5C597.794 161.892 756 89.9999 960 89.9999V280Z" fill="#9CCC65"/>
+
+        <!-- Trees -->
+        <circle cx="200" cy="205" r="15" fill="#7CB342"/>
+        <rect x="195" y="215" width="10" height="20" fill="#8D6E63"/>
+        <circle cx="1580" cy="195" r="20" fill="#7CB342"/>
+        <rect x="1575" y="210" width="10" height="25" fill="#8D6E63"/>
+        <circle cx="800" cy="120" r="18" fill="#7CB342"/>
+        <rect x="795" y="132" width="10" height="23" fill="#8D6E63"/>
+
+        <!-- Wind Turbines -->
+        <g transform="translate(400, 100) scale(0.8)">
+            <path d="M50 150 L50 70" stroke="#BDBDBD" stroke-width="8" stroke-linecap="round"/>
+            <g transform="translate(50,70)" class="turbine-blades">
+                <path d="M0 0 L0 -50 L10 -45 L0 0" fill="white" stroke="#9E9E9E" stroke-width="1"/>
+                <path d="M0 0 L43.3 25 L38.3 35 L0 0" fill="white" stroke="#9E9E9E" stroke-width="1"/>
+                <path d="M0 0 L-43.3 25 L-38.3 35 L0 0" fill="white" stroke="#9E9E9E" stroke-width="1"/>
+            </g>
+            <circle cx="50" cy="70" r="5" fill="#BDBDBD"/>
+        </g>
+        <g transform="translate(1300, 70) scale(1)">
+            <path d="M50 150 L50 70" stroke="#BDBDBD" stroke-width="10" stroke-linecap="round"/>
+            <g transform="translate(50,70)" class="turbine-blades">
+                <path d="M0 0 L0 -60 L12 -55 L0 0" fill="white" stroke="#9E9E9E" stroke-width="1.5"/>
+                <path d="M0 0 L52 30 L47 40 L0 0" fill="white" stroke="#9E9E9E" stroke-width="1.5"/>
+                <path d="M0 0 L-52 30 L-47 40 L0 0" fill="white" stroke="#9E9E9E" stroke-width="1.5"/>
+            </g>
+            <circle cx="50" cy="70" r="7" fill="#BDBDBD"/>
+        </g>
+         <g transform="translate(1400, 95) scale(0.7)">
+            <path d="M50 150 L50 70" stroke="#BDBDBD" stroke-width="8" stroke-linecap="round"/>
+            <g transform="translate(50,70)" class="turbine-blades">
+                <path d="M0 0 L0 -50 L10 -45 L0 0" fill="white" stroke="#9E9E9E" stroke-width="1"/>
+                <path d="M0 0 L43.3 25 L38.3 35 L0 0" fill="white" stroke="#9E9E9E" stroke-width="1"/>
+                <path d="M0 0 L-43.3 25 L-38.3 35 L0 0" fill="white" stroke="#9E9E9E" stroke-width="1"/>
+            </g>
+            <circle cx="50" cy="70" r="5" fill="#BDBDBD"/>
+        </g>
+      </svg>
+    </div>
+
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>
