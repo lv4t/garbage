@@ -27,7 +27,7 @@ function isValidWasteCategory(value: string): value is WasteCategory {
 }
 
 export async function classifyWaste(imageFile: File): Promise<WasteCategory> {
-  // FIX: Per coding guidelines, the API key must be obtained exclusively from `process.env.API_KEY`.
+  // Fix: Per coding guidelines, the API key must be retrieved from `process.env.API_KEY`.
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
   const imagePart = await fileToGenerativePart(imageFile);
