@@ -27,14 +27,12 @@ function isValidWasteCategory(value: string): value is WasteCategory {
 }
 
 export async function classifyWaste(imageFile: File): Promise<WasteCategory> {
-  if (!process.env.API_KEY) {
-    throw new Error("API key is not configured. Please set the API_KEY environment variable.");
-  }
+  // FIX: Per coding guidelines, the API key must be obtained exclusively from `process.env.API_KEY`.
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
   const imagePart = await fileToGenerativePart(imageFile);
   
-  const prompt = `Phân tích hình ảnh và phân loại đối tượng chính vào MỘT trong năm loại sau ĐÂY: "Giấy Tái Chế", "Nhựa Tái Chế", "Kim Loại Tái Chế", "Rác Hữu Cơ", hoặc "Rác Khác". Lưu ý quan trọng: túi ni-lông, bao bì nhựa mỏng, hoặc hộp xốp phải được phân loại là "Rác Khác". Phản hồi của bạn CHỈ ĐƯỢC LÀ MỘT trong năm chuỗi ký tự này và không có gì khác.`;
+  const prompt = `Phân tích hình ảnh và phân loại đối tượng chính vào MỘT trong năm loại sau ĐÂY: "Giấy Tái Chế", "Nhựa Tái Chế", "Kim Loại Tái Chế", "Rác Hữu Cơ", hoặc "Rác Khác". Lưu ý quan trọng: túi ni-lông, bao bì nhựa mỏng, hộp xốp, hoặc ly giấy phải được phân loại là "Rác Khác". Phản hồi của bạn CHỈ ĐƯỢC LÀ MỘT trong năm chuỗi ký tự này và không có gì khác.`;
 
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash',
