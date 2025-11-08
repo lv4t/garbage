@@ -220,7 +220,8 @@ const App: React.FC = () => {
           } catch (err) {
             console.error(err);
             if (intervalRef.current) {
-              setError("Phân tích thất bại. Vui lòng thử lại.");
+              const message = err instanceof Error ? err.message : "Đã xảy ra lỗi không xác định.";
+              setError(message);
             }
           } finally {
             setIsClassifying(false);
@@ -377,7 +378,8 @@ const App: React.FC = () => {
         addToHistory({ image: imageForHistoryBase64, category: result });
     } catch (err) {
         console.error(err);
-        setError("Phân tích thất bại. Vui lòng thử lại.");
+        const message = err instanceof Error ? err.message : "Đã xảy ra lỗi không xác định.";
+        setError(message);
     } finally {
         setIsClassifying(false);
     }
