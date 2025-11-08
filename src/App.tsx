@@ -77,7 +77,6 @@ const App: React.FC = () => {
   // State for COCO-SSD object detection
   const [cocoSsdModel, setCocoSsdModel] = useState<any | null>(null); // Use 'any' to avoid type resolution issues
   const [isModelLoading, setIsModelLoading] = useState<boolean>(false);
-  const [detectedObjects, setDetectedObjects] = useState<any[]>([]); // Use 'any[]'
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null); // For capturing image to send to Gemini
@@ -178,13 +177,11 @@ const App: React.FC = () => {
         const ctx = boundingCanvasRef.current.getContext('2d');
         if (ctx) ctx.clearRect(0, 0, boundingCanvasRef.current.width, boundingCanvasRef.current.height);
       }
-      setDetectedObjects([]);
       return;
     }
 
     setIsClassifying(true);
     setError(null);
-    setDetectedObjects([]); // Clear previous detections before new frame
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -197,10 +194,9 @@ const App: React.FC = () => {
       
       // Perform object detection with COCO-SSD
       const predictions = await cocoSsdModel.detect(video);
-      setDetectedObjects(predictions);
       drawBoundingBoxes(predictions);
 
-      const isPersonDetected = predictions.some(p => p.class === 'person');
+      const isPersonDetected = predictions.some((p: any) => p.class === 'person');
 
       if (isPersonDetected) {
         // If a person is detected, skip classification.
@@ -266,7 +262,6 @@ const App: React.FC = () => {
 
     // Cleanup: Clear detected objects and bounding boxes when camera closes
     return () => {
-        setDetectedObjects([]);
         if (boundingCanvasRef.current) {
             const ctx = boundingCanvasRef.current.getContext('2d');
             if (ctx) ctx.clearRect(0, 0, boundingCanvasRef.current.width, boundingCanvasRef.current.height);
@@ -309,7 +304,6 @@ const App: React.FC = () => {
       setError(null);
       setIsClassifying(false);
       setIsPaused(false);
-      setDetectedObjects([]); // Clear detections when camera is off
       if (boundingCanvasRef.current) { // Clear bounding box canvas
           const ctx = boundingCanvasRef.current.getContext('2d');
           if (ctx) ctx.clearRect(0, 0, boundingCanvasRef.current.width, boundingCanvasRef.current.height);
@@ -415,7 +409,7 @@ const App: React.FC = () => {
                 muted 
                 className="w-full h-full object-cover" 
                 // Set dimensions to ensure canvas overlay matches
-                onLoadedMetadata={(e) => {
+                onLoadedMetadata={() => {
                   if (videoRef.current && boundingCanvasRef.current) {
                     boundingCanvasRef.current.width = videoRef.current.videoWidth;
                     boundingCanvasRef.current.height = videoRef.current.videoHeight;

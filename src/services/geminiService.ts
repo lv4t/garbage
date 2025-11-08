@@ -43,7 +43,7 @@ export async function classifyWaste(imageFile: File): Promise<WasteCategory> {
     },
   });
 
-  const classification = response.text.trim();
+  const classification = (response.text ?? '').trim();
 
   if (isValidWasteCategory(classification)) {
     return classification;
